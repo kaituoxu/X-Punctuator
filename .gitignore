@@ -1,0 +1,9 @@
+# Python
+*.pyc
+__pycache__
+
+# MISC
+temp
+nohup.out
+.vscode
+.DS_Store

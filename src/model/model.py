@@ -1,3 +1,6 @@
+# Created on 2019/02
+# Author: Kaituo XU (NPU-ASLP)
+
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence

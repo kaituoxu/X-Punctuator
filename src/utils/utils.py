@@ -1,3 +1,6 @@
+# Created on 2019/02
+# Author: Kaituo XU (NPU-ASLP)
+
 import errno
 import os
 

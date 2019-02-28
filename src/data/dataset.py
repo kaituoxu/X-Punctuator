@@ -1,3 +1,6 @@
+# Created on 2019/02
+# Author: Kaituo XU (NPU-ASLP)
+
 """
 Logic:
 - Dataset includes a lot of samples, where each sample has an index.

@@ -14,8 +14,6 @@ from torch.utils.data.sampler import SequentialSampler
 
 import utils
 
-IGNORE_ID=-1
-
 
 class PuncDataset(data.Dataset):
     """Custom Dataset for punctuation prediction."""
@@ -114,7 +112,7 @@ class TextAudioCollate(object):
     def __init__(self):
         pass
 
-    def __call__(self, batch, PAD=IGNORE_ID):
+    def __call__(self, batch, PAD=utils.IGNORE_ID):
         """Process one mini-batch samples, such as sorting and padding.
         Args:
             batch: a list of (text sequence, audio feature sequence)
@@ -129,13 +127,13 @@ class TextAudioCollate(object):
         input_seqs, label_seqs = zip(*batch)
         # padding
         lengths = [len(seq) for seq in input_seqs]
-        input_padded_seqs = torch.zeros(len(input_seqs), max(lengths)).fill_(PAD).long()
+        input_padded_seqs = torch.zeros(len(input_seqs), max(lengths)).long()
         label_padded_seqs = torch.zeros(len(input_seqs), max(lengths)).fill_(PAD).long()
         for i, (input, label) in enumerate(zip(input_seqs, label_seqs)):
             end = lengths[i]
             input_padded_seqs[i, :end] = input[:end]
             label_padded_seqs[i, :end] = label[:end]
-        return input_padded_seqs, label_padded_seqs, lengths
+        return input_padded_seqs, lengths, label_padded_seqs
 
 
 def build_data_loader(txt_path, in_vocab_path, out_vocab_path,

@@ -1,6 +1,8 @@
 import errno
 import os
 
+IGNORE_ID=-1
+
 
 def load_vocab(vocab_path, extra_word_list=[], encoding='utf8'):
     n = len(extra_word_list)

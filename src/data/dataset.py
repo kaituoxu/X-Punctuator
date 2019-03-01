@@ -140,7 +140,7 @@ class TextAudioCollate(object):
 
 
 def build_data_loader(txt_path, in_vocab_path, out_vocab_path,
-                      batch_size=1, drop_last=False, num_workers=1):
+                      batch_size=1, drop_last=False, num_workers=0):
     """Return data loader for custom dataset.
     """
     dataset = PuncDataset(txt_path, in_vocab_path, out_vocab_path)

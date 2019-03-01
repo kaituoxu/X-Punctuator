@@ -17,6 +17,7 @@ class LstmPunctuator(nn.Module):
         self.hidden_size = hidden_size
         self.num_layers = num_layers
         self.bidirectional = bidirectional
+        self.num_class = num_class
         # Components
         self.embedding = nn.Embedding(num_embeddings, embedding_dim)
         self.lstm = nn.LSTM(embedding_dim, hidden_size, num_layers,
@@ -49,6 +50,41 @@ class LstmPunctuator(nn.Module):
 
     def flatten_parameters(self):
         self.lstm.flatten_parameters()
+
+    @classmethod
+    def load_model(cls, path):
+        # Load to CPU
+        package = torch.load(path, map_location=lambda storage, loc: storage)
+        model = cls.load_model_from_package(package)
+        return model
+
+    @classmethod
+    def load_model_from_package(cls, package):
+        model = cls(package['num_embeddings'], package['embedding_dim'],
+                    package['hidden_size'], package['num_layers'],
+                    package['bidirectional'], package['num_class'])
+        model.load_state_dict(package['state_dict'])
+        return model
+
+    @staticmethod
+    def serialize(model, optimizer, epoch, tr_loss=None, cv_loss=None):
+        package = {
+            # hyper-parameter
+            'num_embeddings': model.num_embeddings,
+            'embedding_dim': model.embedding_dim,
+            'hidden_size': model.hidden_size,
+            'num_layers': model.num_layers,
+            'bidirectional': model.bidirectional,
+            'num_class': model.num_class,
+            # state
+            'state_dict': model.state_dict(),
+            'optim_dict': optimizer.state_dict(),
+            'epoch': epoch
+        }
+        if tr_loss is not None:
+            package['tr_loss'] = tr_loss
+            package['cv_loss'] = cv_loss
+        return package
 
 
 if __name__ == '__main__':

@@ -184,6 +184,7 @@ class NoPuncTextDataset(object):
         for token in txt_seq.split():
             input.append(self.word2id.get(token, self.word2id["<UNK>"]))
         input.append(self.word2id["<END>"])
+        input = torch.LongTensor(input)
         return input
 
 

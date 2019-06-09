@@ -136,7 +136,7 @@ class TextAudioCollate(object):
             end = lengths[i]
             input_padded_seqs[i, :end] = input[:end]
             label_padded_seqs[i, :end] = label[:end]
-        return input_padded_seqs, lengths, label_padded_seqs
+        return input_padded_seqs, torch.IntTensor(lengths), label_padded_seqs
 
 
 def build_data_loader(txt_path, in_vocab_path, out_vocab_path,

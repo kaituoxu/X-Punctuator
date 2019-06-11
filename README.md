@@ -20,12 +20,17 @@ $ analyer.py -h
 #### How to visualize loss?
 If you want to visualize your loss, you can use [visdom](https://github.com/facebookresearch/visdom) to do that:
 1. Open a new terminal in your remote server (recommend tmux) and run `$ visdom`.
-2. Open a new terminal and run `$ bash run.sh --visdom 1 --visdom_id "<any-string>"` or `$ train.py ... --visdom 1 --vidsdom_id "<any-string>"`.
+2. Open a new terminal and run `$ train.py ... --visdom 1 --vidsdom_id "<any-string>"`.
 3. Open your browser and type `<your-remote-server-ip>:8097`, egs, `127.0.0.1:8097`.
 4. In visdom website, chose `<any-string>` in `Environment` to see your loss.
 #### How to resume training?
 ```bash
-$ bash run.sh --continue_from <model-path>
+$ train.py --continue_from <model-path>
+```
+#### How to use multi-GPU?
+Use comma separated gpu-id sequence, such as:
+```bash
+$ CUDA_VISIBLE_DEVICES="0,1" train.py
 ```
 
 ## Reference

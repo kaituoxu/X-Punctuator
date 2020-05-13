@@ -22,7 +22,7 @@ class LstmPunctuator(nn.Module):
         self.embedding = nn.Embedding(num_embeddings, embedding_dim)
         self.lstm = nn.LSTM(embedding_dim, hidden_size, num_layers,
                             batch_first=True,
-                            bidirectional=bidirectional)
+                            bidirectional=bool(bidirectional))
         fc_in_dim = hidden_size * 2 if bidirectional else hidden_size
         self.fc = nn.Linear(fc_in_dim, num_class)
 
